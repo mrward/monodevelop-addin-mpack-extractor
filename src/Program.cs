@@ -48,6 +48,7 @@ namespace MPackExtractor
 			}
 			
 			DownloadMPackFile ();
+			RemoveExistingMPackExtractDirectory ();
 			ExtractMPackFile ();
 			
 			return 0;
@@ -91,6 +92,16 @@ namespace MPackExtractor
 		{
 			if (File.Exists (downloadFileName)) {
 				File.Delete (downloadFileName);
+			}
+		}
+
+		void RemoveExistingMPackExtractDirectory ()
+		{
+			if (Directory.Exists (mpackExtractionDirectory)) {
+				foreach (string file in Directory.GetFiles (mpackExtractionDirectory)) {
+					File.Delete (file);
+				}
+				Directory.Delete (mpackExtractionDirectory);
 			}
 		}
 		

@@ -48,7 +48,7 @@ namespace MPackExtractor
 			}
 			
 			DownloadMPackFile ();
-			RemoveExistingMPackExtractDirectory ();
+			RemoveExistingMPackExtractDirectories ();
 			ExtractMPackFile ();
 			
 			return 0;
@@ -95,13 +95,26 @@ namespace MPackExtractor
 			}
 		}
 
-		void RemoveExistingMPackExtractDirectory ()
+		void RemoveExistingMPackExtractDirectories ()
 		{
-			if (Directory.Exists (mpackExtractionDirectory)) {
-				foreach (string file in Directory.GetFiles (mpackExtractionDirectory)) {
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Licenses"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects", "Common"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects", "Console"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects", "EmptyKestrelWeb"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects", "EmptyWeb"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects", "Library"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates", "Projects"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates"));
+			RemoveDirectory (mpackExtractionDirectory);
+		}
+
+		void RemoveDirectory (string path)
+		{
+			if (Directory.Exists (path)) {
+				foreach (string file in Directory.GetFiles (path)) {
 					File.Delete (file);
 				}
-				Directory.Delete (mpackExtractionDirectory);
+				Directory.Delete (path);
 			}
 		}
 		

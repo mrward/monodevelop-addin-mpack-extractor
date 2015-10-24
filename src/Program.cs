@@ -48,7 +48,7 @@ namespace MPackExtractor
 			}
 			
 			DownloadMPackFile ();
-			RemoveExistingMPackExtractDirectory ();
+			RemoveExistingMPackExtractDirectories ();
 			ExtractMPackFile ();
 			
 			return 0;
@@ -95,13 +95,25 @@ namespace MPackExtractor
 			}
 		}
 
-		void RemoveExistingMPackExtractDirectory ()
+		void RemoveExistingMPackExtractDirectories ()
 		{
-			if (Directory.Exists (mpackExtractionDirectory)) {
-				foreach (string file in Directory.GetFiles (mpackExtractionDirectory)) {
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "liblinux", "x64"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "liblinux", "x86"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "liblinux"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "libosx", "x86"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "libosx"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Scripts"));
+			RemoveDirectory (Path.Combine (mpackExtractionDirectory, "Templates"));
+			RemoveDirectory (mpackExtractionDirectory);
+		}
+
+		void RemoveDirectory (string path)
+		{
+			if (Directory.Exists (path)) {
+				foreach (string file in Directory.GetFiles (path)) {
 					File.Delete (file);
 				}
-				Directory.Delete (mpackExtractionDirectory);
+				Directory.Delete (path);
 			}
 		}
 		

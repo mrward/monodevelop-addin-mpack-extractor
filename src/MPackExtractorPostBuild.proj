@@ -8,7 +8,7 @@
 	 <PropertyGroup>
     <ExtractExePath Condition=" '$(ExtractExePath)' == '' ">$(MSBuildThisFileDirectory)bin\Debug\MPackExtractor.exe</ExtractExePath>
     <ExtractCommand Condition=" '$(OS)' == 'Windows_NT'">"$(ExtractExePath)"</ExtractCommand>
-    <ExtractCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(ExtractExePath)"</ExtractCommand>
+    <ExtractCommand Condition=" '$(OS)' != 'Windows_NT' ">/usr/bin/mono --runtime=v4.0.30319 "$(ExtractExePath)"</ExtractCommand>
   </PropertyGroup>
   <Target Name="ExtractMPack" AfterTargets="Build">
     <Exec Command="$(ExtractCommand) $(MPackUrl) $(ExtractDir)" />

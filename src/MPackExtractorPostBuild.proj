@@ -9,7 +9,7 @@
 	 <PropertyGroup>
     <ExtractExePath Condition=" '$(ExtractExePath)' == '' ">$(MPackDir)MPackExtractor.exe</ExtractExePath>
     <ExtractCommand Condition=" '$(OS)' == 'Windows_NT'">"$(ExtractExePath)"</ExtractCommand>
-    <ExtractCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(ExtractExePath)"</ExtractCommand>
+    <ExtractCommand Condition=" '$(OS)' != 'Windows_NT' ">/usr/bin/mono --runtime=v4.0.30319 "$(ExtractExePath)"</ExtractCommand>
   </PropertyGroup>
   <ItemGroup>
     <MyCopyItem Include="$(MSBuildThisFileDirectory)\bin\Debug\MPackExtractor.exe" />

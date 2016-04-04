@@ -4,13 +4,18 @@
 		<PrepareForRunDependsOn>$(PrepareForRunDependsOn);ExtractMPack</PrepareForRunDependsOn>
 		<MPackUrl>http://lastexitcode.com/monodevelop-addins/6.0/MonoDevelop.Dnx_0.2.mpack</MPackUrl>
 		<ExtractDir>"$(MSBuildThisFileDirectory)..\extract"</ExtractDir>
+		<MPackDir>$(MSBuildThisFileDirectory)bin\Debug\Run\</MPackDir>
 	</PropertyGroup>
 	 <PropertyGroup>
-    <ExtractExePath Condition=" '$(ExtractExePath)' == '' ">$(MSBuildThisFileDirectory)bin\Debug\MPackExtractor.exe</ExtractExePath>
+    <ExtractExePath Condition=" '$(ExtractExePath)' == '' ">$(MPackDir)MPackExtractor.exe</ExtractExePath>
     <ExtractCommand Condition=" '$(OS)' == 'Windows_NT'">"$(ExtractExePath)"</ExtractCommand>
     <ExtractCommand Condition=" '$(OS)' != 'Windows_NT' ">/usr/bin/mono --runtime=v4.0.30319 "$(ExtractExePath)"</ExtractCommand>
   </PropertyGroup>
+  <ItemGroup>
+		<MyCopyItem Include="$(MSBuildThisFileDirectory)\bin\Debug\MPackExtractor.exe" />
+	</ItemGroup>
   <Target Name="ExtractMPack" AfterTargets="Build">
+		<Copy SourceFiles="@(MyCopyItem)" DestinationFolder="$(MPackDir)" />
     <Exec Command="$(ExtractCommand) $(MPackUrl) $(ExtractDir)" />
   </Target>
 </Project>

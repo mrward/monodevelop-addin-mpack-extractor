@@ -61,7 +61,13 @@ namespace MPackExtractor
 			
 			mpackUrl = args [0];
 			mpackExtractionDirectory = Path.GetFullPath (args [1]);
-			
+
+			// Sanity check. Do not want to be deleting random directories.
+			if (Path.GetFileName (mpackExtractionDirectory) != "extract") {
+				Console.WriteLine ("Unexpected extraction directory: '{0}'", mpackExtractionDirectory);
+				return false;
+			}
+
 			return true;
 		}
 		
@@ -98,10 +104,7 @@ namespace MPackExtractor
 		void RemoveExistingMPackExtractDirectory ()
 		{
 			if (Directory.Exists (mpackExtractionDirectory)) {
-				foreach (string file in Directory.GetFiles (mpackExtractionDirectory)) {
-					File.Delete (file);
-				}
-				Directory.Delete (mpackExtractionDirectory);
+				Directory.Delete (mpackExtractionDirectory, true);
 			}
 		}
 		
